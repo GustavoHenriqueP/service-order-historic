@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Proceeding {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(40)
+
+  Historic Historic[]
+}
+
+model Contact {
+  id   Int    @id @default(autoincrement())
+  name String @db.VarChar(255)
+  tel  String @db.VarChar(15)
+
+  Historic Historic[]
+}
+
+model Image {
+  id         Int    @id @default(autoincrement())
+  historicId Int
+  name       String @db.VarChar(255)
+  url        String
+
+  Historic Historic @relation(fields: [historicId], references: [id])
+}
+
+model Historic {
+  id           Int      @id @default(autoincrement())
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  title        String   @db.VarChar(255)
+  content      String
+  proceedingId Int
+  contactId    Int
+
+  contact    Contact    @relation(fields: [contactId], references: [id])
+  proceeding Proceeding @relation(fields: [proceedingId], references: [id])
+  images     Image[]
+}
