@@ -1,0 +1,33 @@
+GET http://localhost:3333/historics
+
+###
+
+GET http://localhost:3333/historics?search=componente
+
+###
+
+POST http://localhost:3333/historics
+Content-Type: application/json
+
+{
+  "title": "Instalação de novo computador",
+  "content": "Responsável técnico realizou a instalação.",
+  "proceedingId": "2",
+  "contactId": "2",
+}
+
+###
+
+PUT http://localhost:3333/historics/2
+Content-Type: application/json
+
+{
+  "title": "Troca de Componentes",
+  "content": "Responsável técnico realizou a substituição dos seguintes componentes:  Fonte Bateria Módulo de comunicação  OBS 1: Módulo de comunicação especificado foi o Optimus 126122.  OBS 2: Imagens relativas ao componente estão em anexo.   Medições realizadas:  F1: 122hz  /  F2: 120hz.",
+  "proceedingId": "1",
+  "contactId": "2"
+}
+
+###
+
+DELETE http://localhost:3333/historics/4

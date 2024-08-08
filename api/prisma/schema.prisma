@@ -28,14 +28,14 @@ model Image {
   name       String @db.VarChar(255)
   url        String
 
-  Historic Historic @relation(fields: [historicId], references: [id])
+  Historic Historic @relation(fields: [historicId], references: [id], onDelete: Cascade)
 }
 
 model Historic {
-  id           Int      @id @default(autoincrement())
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
-  title        String   @db.VarChar(255)
+  id           Int       @id @default(autoincrement())
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime? @updatedAt
+  title        String    @db.VarChar(255)
   content      String
   proceedingId Int
   contactId    Int
