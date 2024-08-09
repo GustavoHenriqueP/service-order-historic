@@ -1,6 +1,6 @@
-import "@/App.css";
-import Header from "@/components/Header";
-import { ThemeProvider } from "@/context/ThemeProvider";
+import '@/App.css';
+import Header from '@/components/Header';
+import { ThemeProvider } from '@/context/ThemeProvider';
 
 function App() {
   return (
