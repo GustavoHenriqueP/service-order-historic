@@ -7,14 +7,6 @@ const bodySchema = z.object({
   content: z.string(),
   proceedingId: z.coerce.number(),
   contactId: z.coerce.number(),
-  images: z
-    .array(
-      z.object({
-        name: z.string().max(255),
-        url: z.string(),
-      })
-    )
-    .nullish(),
 });
 
 export async function historicsRoutes(app: FastifyInstance) {
@@ -31,7 +23,6 @@ export async function historicsRoutes(app: FastifyInstance) {
         content: true,
         proceeding: true,
         contact: true,
-        images: true,
       },
       orderBy: {
         createdAt: 'desc',
@@ -62,7 +53,7 @@ export async function historicsRoutes(app: FastifyInstance) {
   });
 
   app.post('/historics', async (request, reply) => {
-    const { title, content, proceedingId, contactId, images } = bodySchema.parse(request.body);
+    const { title, content, proceedingId, contactId } = bodySchema.parse(request.body);
 
     const { id } = await prisma.historic.create({
       data: {
@@ -73,22 +64,6 @@ export async function historicsRoutes(app: FastifyInstance) {
       },
     });
 
-    // TODO: Lidar com imagens de forma correta. Salvando em assets e puxando seu url path
-    // Cadastra imagens se elas existirem
-    // if (images) {
-    //   const saveImagePromises = images.map(({ name, url }) => {
-    //     return prisma.image.create({
-    //       data: {
-    //         historicId: id,
-    //         name,
-    //         url,
-    //       },
-    //     });
-    //   });
-
-    //   await Promise.all(saveImagePromises);
-    // }
-
     return reply.status(201).send();
   });
 
@@ -96,7 +71,7 @@ export async function historicsRoutes(app: FastifyInstance) {
     const paramsSchema = z.object({ id: z.coerce.number() });
     const { id } = paramsSchema.parse(request.params);
 
-    const { title, content, proceedingId, contactId, images } = bodySchema.parse(request.body);
+    const { title, content, proceedingId, contactId } = bodySchema.parse(request.body);
 
     await prisma.historic.update({
       where: {
@@ -109,8 +84,6 @@ export async function historicsRoutes(app: FastifyInstance) {
         contactId,
       },
     });
-
-    // TODO: Lidar com imagens de forma correta. Excluindo as que não vieram mais no array e salvando as novas
   });
 
   app.delete('/historics/:id', async (request) => {

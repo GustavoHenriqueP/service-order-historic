@@ -22,15 +22,6 @@ model Contact {
   Historic Historic[]
 }
 
-model Image {
-  id         Int    @id @default(autoincrement())
-  historicId Int
-  name       String @db.VarChar(255)
-  url        String
-
-  Historic Historic @relation(fields: [historicId], references: [id], onDelete: Cascade)
-}
-
 model Historic {
   id           Int       @id @default(autoincrement())
   createdAt    DateTime  @default(now())
@@ -42,5 +33,4 @@ model Historic {
 
   contact    Contact    @relation(fields: [contactId], references: [id])
   proceeding Proceeding @relation(fields: [proceedingId], references: [id])
-  images     Image[]
 }
