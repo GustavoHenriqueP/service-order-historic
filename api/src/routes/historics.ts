@@ -55,7 +55,7 @@ export async function historicsRoutes(app: FastifyInstance) {
   app.post('/historics', async (request, reply) => {
     const { title, content, proceedingId, contactId } = bodySchema.parse(request.body);
 
-    const { id } = await prisma.historic.create({
+    await prisma.historic.create({
       data: {
         title,
         content,
