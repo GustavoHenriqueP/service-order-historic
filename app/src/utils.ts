@@ -1,9 +1,10 @@
-export function getDate(stringDate: string) {
+export function getDate(stringDate: number | string | Date) {
   return new Date(stringDate);
 }
 
-export function formatDate(date: Date | string) {
-  const dateNormalized = typeof date === 'string' ? new Date(date) : date;
+export function formatDate(date: number | string | Date) {
+  const dateNormalized =
+    typeof date === 'string' || typeof date === 'number' ? new Date(date) : date;
 
   const formatedDate = dateNormalized.toLocaleDateString('pt-BR', {
     day: 'numeric',
