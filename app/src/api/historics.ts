@@ -11,8 +11,10 @@ export interface Contact {
   tel: string;
 }
 
+export type HistoricId = number;
+
 export interface HistoricMetaData {
-  id: number;
+  id: HistoricId;
   createdAt: string;
   updatedAt: string;
 }
@@ -55,7 +57,7 @@ export async function createHistoric(historicData: HistoricData) {
 }
 
 // UPDATE
-export async function updateHistoric(id: Pick<HistoricMetaData, 'id'>, historicData: HistoricData) {
+export async function updateHistoric(id: HistoricId, historicData: HistoricData) {
   const url = new URL(`/historics/${id}`, API_URL_DEV);
   const options: RequestInit = {
     method: 'PUT',
@@ -69,7 +71,7 @@ export async function updateHistoric(id: Pick<HistoricMetaData, 'id'>, historicD
 }
 
 // DELETE
-export async function deleteHistoric(id: Pick<HistoricMetaData, 'id'>) {
+export async function deleteHistoric(id: HistoricId) {
   const url = new URL(`/historics/${id}`, API_URL_DEV);
   const options: RequestInit = {
     method: 'DELETE',
