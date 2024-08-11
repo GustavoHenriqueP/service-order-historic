@@ -4,7 +4,7 @@ import { useHistoricList } from '@/context/HistoricListContext';
 import { PlusCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 
-const AppBar = () => {
+const MenuBar = () => {
   const [search, setSearch] = useState('');
   const { selected } = useHistoricList();
 
@@ -32,4 +32,4 @@ const AppBar = () => {
     </div>
   );
 };
-export default AppBar;
+export default MenuBar;

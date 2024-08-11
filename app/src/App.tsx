@@ -1,5 +1,5 @@
 import '@/App.css';
-import AppBar from '@/components/AppBar';
+import MenuBar from '@/components/MenuBar';
 import Header from '@/components/Header';
 import { Separator } from '@/components/ui/Separator';
 import { HistoricListProvider } from '@/context/HistoricListContext';
@@ -13,7 +13,7 @@ function App() {
       <HistoricListProvider>
         <main className="mt-6 flex max-w-full justify-center px-6">
           <div>
-            <AppBar />
+            <MenuBar />
             <Separator orientation="horizontal" className="my-3" />
           </div>
         </main>
