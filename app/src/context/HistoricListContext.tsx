@@ -2,6 +2,8 @@ import { HistoricId } from '@/api/historics';
 import { createContext, useContext, useState } from 'react';
 
 interface IHistoricListContext {
+  searched: string;
+  setSearched: React.Dispatch<React.SetStateAction<string>>;
   selected: HistoricId[];
   addSelected: (id: HistoricId) => void;
   removeSelected: (id: HistoricId) => void;
@@ -19,6 +21,7 @@ export const useHistoricList = () => {
 };
 
 export const HistoricListProvider = ({ children }: React.PropsWithChildren) => {
+  const [searched, setSearched] = useState('');
   const [selected, setSelected] = useState<HistoricId[]>([]);
 
   function addSelected(id: HistoricId) {
@@ -40,6 +43,8 @@ export const HistoricListProvider = ({ children }: React.PropsWithChildren) => {
   }
 
   const providerValue: IHistoricListContext = {
+    searched,
+    setSearched,
     selected,
     addSelected,
     removeSelected,
