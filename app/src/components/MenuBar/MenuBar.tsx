@@ -6,14 +6,17 @@ import { useState } from 'react';
 
 const MenuBar = () => {
   const [search, setSearch] = useState('');
-  const { selected } = useHistoricList();
+  const { selected, setSearched, isLoadingSearch } = useHistoricList();
 
   return (
     <div role="menubar" className="flex max-w-full items-center justify-between gap-6">
       <SearchInput
         value={search}
         onChange={(e) => setSearch(e.target.value)}
+        submitFn={setSearched}
+        debounceTime={1000}
         clear={() => setSearch('')}
+        isLoading={isLoadingSearch}
       />
 
       <div className="flex gap-2">

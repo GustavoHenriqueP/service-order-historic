@@ -1,19 +1,9 @@
-import { getHistorics } from '@/api/historics';
 import HistoricItem from '@/components/HistoricItem';
+import Loader from '@/components/Loader';
 import { useHistoricList } from '@/context/HistoricListContext';
-import { useQuery } from '@tanstack/react-query';
 
 const HistoricList = () => {
-  const { searched } = useHistoricList();
-
-  const {
-    data: historicData,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ['historicList', searched],
-    queryFn: ({ queryKey }) => getHistorics(queryKey[1]),
-  });
+  const { historicData, isLoadingList, error } = useHistoricList();
 
   if (error)
     return (
@@ -22,12 +12,16 @@ const HistoricList = () => {
       </div>
     );
 
-  if (isLoading)
+  if (isLoadingList)
     return (
-      <div>
-        <p>Loading...</p>
+      <div className="flex w-full items-center justify-center">
+        <p className="flex items-center gap-2">
+          <Loader /> Carregando lista...
+        </p>
       </div>
     );
+
+  console.log(historicData);
 
   return (
     historicData !== undefined && (

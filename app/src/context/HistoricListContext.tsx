@@ -1,7 +1,12 @@
-import { HistoricId } from '@/api/historics';
+import { getHistorics, Historic, HistoricId } from '@/api/historics';
+import { keepPreviousData, useQuery } from '@tanstack/react-query';
 import { createContext, useContext, useState } from 'react';
 
 interface IHistoricListContext {
+  historicData: Historic[] | undefined;
+  isLoadingList: boolean;
+  isLoadingSearch: boolean;
+  error: Error | null;
   searched: string;
   setSearched: React.Dispatch<React.SetStateAction<string>>;
   selected: HistoricId[];
@@ -24,6 +29,17 @@ export const HistoricListProvider = ({ children }: React.PropsWithChildren) => {
   const [searched, setSearched] = useState('');
   const [selected, setSelected] = useState<HistoricId[]>([]);
 
+  const {
+    data: historicData,
+    isLoading,
+    isFetching,
+    error,
+  } = useQuery({
+    queryKey: ['historicList', searched],
+    queryFn: ({ queryKey }) => getHistorics(queryKey[1]),
+    placeholderData: keepPreviousData,
+  });
+
   function addSelected(id: HistoricId) {
     setSelected((currentValue) => {
       const newValue = new Set(currentValue);
@@ -43,6 +59,10 @@ export const HistoricListProvider = ({ children }: React.PropsWithChildren) => {
   }
 
   const providerValue: IHistoricListContext = {
+    historicData,
+    isLoadingList: isLoading,
+    isLoadingSearch: isFetching && searched !== '',
+    error,
     searched,
     setSearched,
     selected,
